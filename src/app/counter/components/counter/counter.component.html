@@ -1,0 +1,24 @@
+<div class="container">
+  <br />
+  <div>
+    <h1>
+      Simple signal counter
+      <br />
+    </h1>
+    <h2>
+      <span class="badge bg-primary">Updates: {{ changes() }}</span>
+    </h2>
+
+    <h2>
+      <span class="badge bg-primary"
+        >{{ counter() }}<sup>2</sup> => {{ doubled() }}</span
+      >
+    </h2>
+  </div>
+  <hr />
+  <div class="row">
+    <button class="col-1 btn btn-success" (click)="decrement()">-1</button>
+    <h2 class="col-1 text-center">{{ counter() }}</h2>
+    <button class="col-1 btn btn-success" (click)="increment()">+1</button>
+  </div>
+</div>
