@@ -1,9 +1,22 @@
 <div class="container">
-  <app-counter />
-</div>
+  <br />
 
-<br />
-
-<div class="container">
-  <app-posts />
+  <h1>Choose component to load</h1>
+  <div class="row">
+    <button
+      class="btn btn-outline-secondary col-3 me-3"
+      [routerLink]="['/counter']"
+      [routerLinkActive]="'btn-primary'"
+    >
+      <a [routerLink]="['/counter']">Counter</a>
+    </button>
+    <button
+      class="btn btn-outline-secondary col-3"
+      [routerLink]="['/posts']"
+      [routerLinkActive]="'btn-primary'"
+    >
+      <a [routerLink]="['/posts']">Posts</a>
+    </button>
+  </div>
+  <router-outlet />
 </div>
