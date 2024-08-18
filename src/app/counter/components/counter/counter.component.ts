@@ -1,4 +1,10 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  signal,
+} from '@angular/core';
 
 @Component({
   selector: 'app-counter',
@@ -6,6 +12,7 @@ import { Component, computed, effect, signal } from '@angular/core';
   imports: [],
   templateUrl: './counter.component.html',
   styleUrl: './counter.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterComponent {
   public counter = signal(0);
@@ -16,7 +23,7 @@ export class CounterComponent {
       this.counter();
       this.changes.update((changes) => changes + 1);
     },
-    { allowSignalWrites: true },
+    { allowSignalWrites: true }
   );
   public increment() {
     this.counter.update((value) => value + 1);
@@ -25,4 +32,6 @@ export class CounterComponent {
   public decrement() {
     this.counter.update((value) => value - 1);
   }
+
+  counter2 = 0;
 }
