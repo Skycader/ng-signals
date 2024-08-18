@@ -1,0 +1,10 @@
+<br />
+<h1>Fetching posts using Signals and RxJs</h1>
+<hr />
+<button class="btn btn-success me-3" (click)="prevPost()">Previous post</button>
+<button class="btn btn-success" (click)="nextPost()">Next post</button>
+<br />
+<br />
+<div class="container">
+  <app-post [postId]="postId()" />
+</div>
