@@ -1,10 +1,12 @@
 import { Component, input } from '@angular/core';
 import { Post } from '../../models/post.class';
+import { httpResource } from '@angular/common/http';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [], // CommonModule больше не нужен, если вы использовали только async/if/for
+  imports: [JsonPipe], // CommonModule больше не нужен, если вы использовали только async/if/for
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
@@ -26,7 +28,7 @@ export class PostComponent {
 
   // Встроенные сигналы состояния
   public get loading() {
-    return this.postResource.loading;
+    return this.postResource.isLoading;
   }
   public get error() {
     return this.postResource.error;

@@ -2,10 +2,12 @@
   Current post <span class="badge bg-primary">{{ postId() }}</span>
 </h3>
 
-@if (!error()) { @if (loading()) {
-<span>Loading post...</span>
+@if (!error()) {
+  @if (loading()) {
+    <span>Loading post...</span>
+  } @else {
+    <pre>{{ post | json }}</pre>
+  }
 } @else {
-<pre>{{ post() | json }}</pre>
-} } @else {
-<pre>Error while fetching post!</pre>
+  <pre>Error while fetching post!</pre>
 }
