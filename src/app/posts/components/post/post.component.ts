@@ -1,46 +1,34 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, input, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, of, switchMap, tap } from 'rxjs';
+import { Component, input } from '@angular/core';
 import { Post } from '../../models/post.class';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [CommonModule],
+  imports: [], // CommonModule больше не нужен, если вы использовали только async/if/for
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
 export class PostComponent {
+  // Автоматически отслеживается ресурсом при изменении
   public postId = input(1, { alias: 'postId' });
 
-  public loading = signal(false);
-  public error = signal(false);
-
-  private http = inject(HttpClient);
-
-  public post$ = toObservable(this.postId).pipe(
-    tap(() => {
-      this.loading.set(true);
-    }),
-    switchMap((postId) =>
-      this.http
-        .get<Post>(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-        .pipe(
-          tap(() => this.error.set(false)),
-          tap(() => this.loading.set(false)),
-          tap((post: Post) => this.post.set(post)),
-          catchError(() => {
-            console.log('error');
-            this.error.set(true);
-            return of(new Post());
-          })
-        )
-    )
+  // Создаем ресурс. Передаем функцию-сигнал для URL
+  public postResource = httpResource<Post>(
+    () => `https://jsonplaceholder.typicode.com/posts/${this.postId()}`,
   );
 
-  public postObserver = toSignal(this.post$);
+  // Для сохранения обратной совместимости с вашим старым шаблоном:
+  // postResource.value() вернет Post | undefined.
+  // Если вам строго нужен пустой объект по умолчанию вместо undefined:
+  public get post() {
+    return this.postResource.value() ?? new Post();
+  }
 
-  public post = signal(new Post());
+  // Встроенные сигналы состояния
+  public get loading() {
+    return this.postResource.loading;
+  }
+  public get error() {
+    return this.postResource.error;
+  }
 }
