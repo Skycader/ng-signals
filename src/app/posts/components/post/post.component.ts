@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Post } from '../../models/post.class';
 import { httpResource } from '@angular/common/http';
 import { JsonPipe } from '@angular/common';
@@ -22,9 +22,7 @@ export class PostComponent {
   // Для сохранения обратной совместимости с вашим старым шаблоном:
   // postResource.value() вернет Post | undefined.
   // Если вам строго нужен пустой объект по умолчанию вместо undefined:
-  public get post() {
-    return this.postResource.value() ?? new Post();
-  }
+  public post = computed(() => this.postResource.value() ?? new Post());
 
   // Встроенные сигналы состояния
   public get loading() {
